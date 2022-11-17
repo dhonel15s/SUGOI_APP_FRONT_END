@@ -12,8 +12,13 @@ import { Container } from 'react-bootstrap';
 import { UserProvider } from './data/userContext.js';
 
 // IMPORT: PAGES
-import AppNavbar from './components/AppNavbar.js';
+import Home from './pages/Home.js';
 import Login from './pages/Login.js';
+import Register from './pages/Register.js';
+import Error from './pages/Error.js';
+
+// IMPORT: COMPONENTS
+import AppNavbar from './components/AppNavbar.js';
 
 
 // APP FUNCTION MAIN --------------------------------------------------------------
@@ -75,9 +80,10 @@ function App() {
 
         <Container>
           <Routes>
-            {/*<Route exact path="/" element={<Home/>} />*/}
+            <Route exact path="/" element={<Home/>} />
             <Route exact path="/login" element={<Login/>}/>
-            {/*<Route exact path="*" element={<Error/>} />*/}
+            <Route exact path="/register" element={<Register/>}/>
+            <Route exact path="*" element={<Error/>} />
           </Routes>
         </Container>
       </Router>

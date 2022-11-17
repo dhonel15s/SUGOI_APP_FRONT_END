@@ -1,8 +1,7 @@
 /* IMPORT GOOGLE FONT */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600;700;900&family=Reggae+One&display=swap');
 
-/*font-family: 'Noto Serif JP', serif;
-font-family: 'Reggae One', cursive;*/
 *{
-    font-family: 'Reggae One', cursive;
+    font-size: 0.9rem;
+    font-family: 'Noto Serif JP', serif;
 }
