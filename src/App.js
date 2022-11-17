@@ -15,6 +15,8 @@ import { UserProvider } from './data/userContext.js';
 import Home from './pages/Home.js';
 import Login from './pages/Login.js';
 import Register from './pages/Register.js';
+import Products from './pages/Products.js';
+import ProductView from './pages/ProductView.js';
 import Error from './pages/Error.js';
 
 // IMPORT: COMPONENTS
@@ -81,6 +83,8 @@ function App() {
         <Container>
           <Routes>
             <Route exact path="/" element={<Home/>} />
+            <Route exact path="/products" element={<Products/>}/>
+            <Route exact path="/products/:productId" element={<ProductView />} />
             <Route exact path="/login" element={<Login/>}/>
             <Route exact path="/register" element={<Register/>}/>
             <Route exact path="*" element={<Error/>} />

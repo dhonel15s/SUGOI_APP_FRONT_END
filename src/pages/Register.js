@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 // IMPORT: BOOTSTRAP ELEMENTS
-import {Form, Button} from 'react-bootstrap';
+import {Form, Button, Image} from 'react-bootstrap';
 
 // IMPORT: USER CONTEXT
 import UserContext from '../data/userContext';
+
+// IMPORT: CSS
+import "./styles/Register.css";
 
 
 // REGISTER FUNCTION MAIN --------------------------------------------------------------
@@ -59,13 +62,12 @@ export default function Register(){
                 email: email
             })
         })
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data =>{
-            console.log(data);
 
             if(data){
                 Swal.fire({
-                    title: "Duplicate email found",
+                    title: "Sorry. Email already in use.",
                     icon: "error",
                     text: "Kindly provide another email to complete the registration."
                 })
@@ -78,29 +80,26 @@ export default function Register(){
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        firstName: fName,
-                        lastName: lName,
+                        firstName: firstName,
+                        lastName: lastName,
                         email: email,
-                        password: password1,
-                        mobileNo: mobileNo
+                        password: password
                     })
                 })
-                .then(res => res.json())
+                .then(response => response.json())
                 .then(data => {
-                    console.log(data);
 
                     if(data){
                         Swal.fire({
                             title: "Registration Successful",
                             icon: "success",
-                            text: "Welcome to Zuitt!"
+                            text: "Hi ${firstName} Welcome to Sugoi!"
                         });
-                        setFName('');
-                        setLName('');
+                        setFirstName('');
+                        setLastName('');
                         setEmail('');
-                        setMobileNo('');
-                        setPassword1('');
-                        setPassword2('');
+                        setPassword('');
+                        setConfirmPassword('');
                         navigate("/login");
                     }
                     else{
@@ -124,7 +123,8 @@ export default function Register(){
     return(
 
         <>
-            <h1 className="my-5 text-center">Register</h1>
+            <Image src={require('../assets/logo.jpg')} width="40" className="d-block m-auto"/>
+            <h1 className="my-5 mt-0 text-center">Register</h1>
             <Form onSubmit={event => registerUser(event)}>
 
             {/*FIRST NAME INPUT*/}
@@ -170,37 +170,36 @@ export default function Register(){
             </Form.Group>
 
             {/*PASSWORD INPUT*/}
-            <Form.Group className="mb-3" controlId="password1">
+            <Form.Group className="mb-3" controlId="password">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                     type="password" 
                     placeholder="Enter Password"
-                    value={password1}
-                    onChange={e => setPassword1(e.target.value)}
+                    value={password}
+                    // DURING INPUT, PASS THE DATA IN THE FIELD TO "password"
+                    onChange={event => setPassword(event.target.value)}
                     required
                 />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="password2">
+            {/*CONFIRM PASSWORD INPUT*/}
+            <Form.Group className="mb-3" controlId="confirmPassword">
                 <Form.Label>Verify Password</Form.Label>
                 <Form.Control
                     type="password" 
                     placeholder="Verify Password"
-                    value={password2}
-                    onChange={e => setPassword2(e.target.value)}
+                    value={confirmPassword}
+                    // DURING INPUT, PASS THE DATA IN THE FIELD TO "confirmPassword"
+                    onChange={event => setConfirmPassword(event.target.value)}
                     required
                 />
             </Form.Group>
             {
                 isActive
                 ?
-                    <Button variant="primary" type="submit" id="submitBtn">
-                    Submit
-                    </Button>
+                    <Button type="submit" id="submitBtn">SUBMIT</Button>
                 :
-                    <Button variant="danger" type="submit" id="submitBtn" disabled>
-                    Submit
-                    </Button>
+                    <Button type="submit" id="submitBtn" disabled>SUBMIT</Button>
             }
             </Form>
         </>

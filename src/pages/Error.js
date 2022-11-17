@@ -4,7 +4,7 @@ import Banner from '../components/Banner.js';
 export default function Error(){
 
 	// DATA TO BE DISPLAYED IN ERROR PAGES
-	const data2 = {
+	const data = {
 		title: "404 - Page Not Found!",
 		subtitle: "The page you are trying to access cannot be found.",
 		content: "It's either the page has been moved or the url is incorrect",
@@ -15,7 +15,7 @@ export default function Error(){
 	// PASS DATA TO BANNER PROP
 	return(
 		<>
-			<Banner bannerProp={data2}/>
+			<Banner bannerProp={data}/>
 		</>
 	)
 }

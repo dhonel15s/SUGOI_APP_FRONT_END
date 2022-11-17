@@ -1,0 +1,10 @@
+/* IMPORT GOOGLE FONT */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600;700;900&family=Reggae+One&display=swap');
+
+.product-button {
+	background-color: #f43630 !important;
+	border: none !important;
+	border-radius: 20px !important;
+	font-size: 0.8rem !important;
+	letter-spacing: 1px !important;
+}

@@ -1,0 +1,7 @@
+/* IMPORT GOOGLE FONT */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600;700;900&family=Reggae+One&display=swap');
+
+.products-title {
+	font-size: 2rem !important;
+	font-family: 'Reggae One', cursive !important;
+}

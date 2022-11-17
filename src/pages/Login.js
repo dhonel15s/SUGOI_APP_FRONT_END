@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 // IMPORT: BOOTSTRAP ELEMENTS
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Row, Col, Form, Button, Image } from 'react-bootstrap';
 
 // IMPORT: USER CONTEXT
 import UserContext from '../data/userContext.js';
@@ -114,7 +114,7 @@ export default function Login() {
 		})
 	}
 
-	// LOGIN MAIN HTML------------------------------------------------------------------
+	// LOGIN MAIN DESIGN------------------------------------------------------------------
 	return (
 		(user.id !== null)
 		?
@@ -123,6 +123,7 @@ export default function Login() {
 		<>	
 			<Row className="login-row d-flex flex-row justify-content-around align-items-center text-center">
 				<Col xs={11} md={5}>
+				<Image src={require('../assets/logo.jpg')} width="40" className="d-block m-auto"/>
 				<p className="form-title">Login</p>
 				<Form  onSubmit={(event) => authenticate(event)} className="form-body border m-auto p-5 shadow">
 
