@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 // IMPORT: BOOTSTRAP ELEMENTS
-import {Form, Button, Image} from 'react-bootstrap';
+import { Form, Button, Image, Row , Col } from 'react-bootstrap';
 
 // IMPORT: USER CONTEXT
-import UserContext from '../data/userContext';
+import UserContext from '../UserContext';
 
 // IMPORT: CSS
 import "./styles/Register.css";
@@ -123,85 +123,94 @@ export default function Register(){
     return(
 
         <>
-            <Image src={require('../assets/logo.jpg')} width="40" className="d-block m-auto"/>
-            <h1 className="my-5 mt-0 text-center">Register</h1>
-            <Form onSubmit={event => registerUser(event)}>
+            <Row className="d-flex flex-row justify-content-around align-items-center">
+                <Col xs={11} md={7} lg={5}>
+                <Image src={require('../assets/logo.jpg')} width="40" className="d-block m-auto mt-2"/>
+                <h1 className="text-center form-title">Register</h1>
+                <Form onSubmit={event => registerUser(event)} className="form-body border m-auto p-5 shadow-sm">
 
-            {/*FIRST NAME INPUT*/}
-            <Form.Group className="mb-3" controlId="firstName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Enter first name"
-                    value={firstName}
-                    // DURING INPUT, PASS THE DATA IN THE FIELD TO "firstName"
-                    onChange={event => setFirstName(event.target.value)}
-                    required
-                />
-            </Form.Group>
+                {/*FIRST NAME INPUT*/}
+                <Form.Group className="mb-3" controlId="firstName">
+                    <Form.Label className="form-label">First Name</Form.Label>
+                    <Form.Control
+                        className="form-input py-2"
+                        type="text"
+                        placeholder="e.g Juan"
+                        value={firstName}
+                        // DURING INPUT, PASS THE DATA IN THE FIELD TO "firstName"
+                        onChange={event => setFirstName(event.target.value)}
+                        required
+                    />
+                </Form.Group>
 
-            {/*LAST NAME INPUT*/}
-            <Form.Group className="mb-3" controlId="lastName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Enter last name"
-                    value={lastName}
-                    // DURING INPUT, PASS THE DATA IN THE FIELD TO "lastName"
-                    onChange={event => setLastName(event.target.value)}
-                    required
-                />
-            </Form.Group>
+                {/*LAST NAME INPUT*/}
+                <Form.Group className="mb-3" controlId="lastName">
+                    <Form.Label className="form-label">Last Name</Form.Label>
+                    <Form.Control
+                        className="form-input py-2"
+                        type="text"
+                        placeholder="e.g Dela Cruz"
+                        value={lastName}
+                        // DURING INPUT, PASS THE DATA IN THE FIELD TO "lastName"
+                        onChange={event => setLastName(event.target.value)}
+                        required
+                    />
+                </Form.Group>
 
-            {/*EMAIL INPUT*/}
-            <Form.Group className="mb-3" controlId="emailAddress">
-                <Form.Label>Email Address</Form.Label>
-                <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    // DURING INPUT, PASS THE DATA IN THE FIELD TO "email"
-                    onChange={event => setEmail(event.target.value)}
-                    value={email}
-                    required
-                />
-                <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-                </Form.Text>
-            </Form.Group>
+                {/*EMAIL INPUT*/}
+                <Form.Group className="mb-3" controlId="emailAddress">
+                    <Form.Label className="form-label">Email Address</Form.Label>
+                    <Form.Control
+                        className="form-input py-2"
+                        type="email"
+                        placeholder="e.g juandelacruz@mail.com"
+                        // DURING INPUT, PASS THE DATA IN THE FIELD TO "email"
+                        onChange={event => setEmail(event.target.value)}
+                        value={email}
+                        required
+                    />
+                    <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                    </Form.Text>
+                </Form.Group>
 
-            {/*PASSWORD INPUT*/}
-            <Form.Group className="mb-3" controlId="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                    type="password" 
-                    placeholder="Enter Password"
-                    value={password}
-                    // DURING INPUT, PASS THE DATA IN THE FIELD TO "password"
-                    onChange={event => setPassword(event.target.value)}
-                    required
-                />
-            </Form.Group>
+                {/*PASSWORD INPUT*/}
+                <Form.Group className="mb-3" controlId="password">
+                    <Form.Label className="form-label">Password</Form.Label>
+                    <Form.Control
+                        className="form-input py-2"
+                        type="password" 
+                        placeholder="e.g juan1234"
+                        value={password}
+                        // DURING INPUT, PASS THE DATA IN THE FIELD TO "password"
+                        onChange={event => setPassword(event.target.value)}
+                        required
+                    />
+                </Form.Group>
 
-            {/*CONFIRM PASSWORD INPUT*/}
-            <Form.Group className="mb-3" controlId="confirmPassword">
-                <Form.Label>Verify Password</Form.Label>
-                <Form.Control
-                    type="password" 
-                    placeholder="Verify Password"
-                    value={confirmPassword}
-                    // DURING INPUT, PASS THE DATA IN THE FIELD TO "confirmPassword"
-                    onChange={event => setConfirmPassword(event.target.value)}
-                    required
-                />
-            </Form.Group>
-            {
-                isActive
-                ?
-                    <Button type="submit" id="submitBtn">SUBMIT</Button>
-                :
-                    <Button type="submit" id="submitBtn" disabled>SUBMIT</Button>
-            }
-            </Form>
+                {/*CONFIRM PASSWORD INPUT*/}
+                <Form.Group className="mb-3" controlId="confirmPassword">
+                    <Form.Label className="form-label">Verify Password</Form.Label>
+                    <Form.Control
+                        className="form-input py-2"
+                        type="password" 
+                        placeholder="retype password for confirmation"
+                        value={confirmPassword}
+                        // DURING INPUT, PASS THE DATA IN THE FIELD TO "confirmPassword"
+                        onChange={event => setConfirmPassword(event.target.value)}
+                        required
+                    />
+                </Form.Group>
+                {
+                    isActive
+                    ?
+                        <Button className="login-button px-5" type="submit" id="submitBtn">SUBMIT</Button>
+                    :
+                        <Button className="login-button px-5" type="submit" id="submitBtn" disabled>SUBMIT</Button>
+                }
+                </Form>
+                </Col>
+            </Row>
         </>
     )
 }

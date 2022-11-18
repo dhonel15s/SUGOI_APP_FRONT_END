@@ -25,10 +25,10 @@ export default function Products() {
 		.then(response => response.json())
 		.then(data => {
 			// DISPLAY EACH PRODUCTS
-			setProducts(data.productList.map(product =>{
-				return(
-					<ProductCard key={product._id} productProp={product}/>
-				);
+			setProducts(data.productList.map(product =>{				
+					return(
+						<ProductCard key={product._id} productProp={product}/>
+					);
 			}));
 		})
 	}, []);

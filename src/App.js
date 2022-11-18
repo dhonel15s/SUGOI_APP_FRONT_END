@@ -9,15 +9,17 @@ import './App.css';
 import { Container } from 'react-bootstrap';
 
 // IMPORT: USER CONTEXT
-import { UserProvider } from './data/userContext.js';
+import { UserProvider } from './UserContext.js';
 
 // IMPORT: PAGES
 import Home from './pages/Home.js';
 import Login from './pages/Login.js';
+import Logout from './pages/Logout.js';
 import Register from './pages/Register.js';
 import Products from './pages/Products.js';
 import ProductView from './pages/ProductView.js';
 import Error from './pages/Error.js';
+import ManageProducts from './pages/ManageProducts.js';
 
 // IMPORT: COMPONENTS
 import AppNavbar from './components/AppNavbar.js';
@@ -85,7 +87,9 @@ function App() {
             <Route exact path="/" element={<Home/>} />
             <Route exact path="/products" element={<Products/>}/>
             <Route exact path="/products/:productId" element={<ProductView />} />
+            <Route exact path="/manageproducts" element={<ManageProducts />} />
             <Route exact path="/login" element={<Login/>}/>
+            <Route exact path="/logout" element={<Logout/>}/>
             <Route exact path="/register" element={<Register/>}/>
             <Route exact path="*" element={<Error/>} />
           </Routes>

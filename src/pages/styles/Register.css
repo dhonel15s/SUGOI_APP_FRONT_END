@@ -1,0 +1,36 @@
+/* IMPORT GOOGLE FONT */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600;700;900&family=Reggae+One&display=swap');
+
+
+.form-title {
+	font-size: 2rem !important;
+	font-family: 'Reggae One', cursive !important;
+}
+
+.form-body {
+	border-radius: 20px !important;
+}
+
+.form-label {
+	font-size: 0.8rem !important;
+	letter-spacing: 2px !important;
+}
+
+.form-input {
+	border-radius: 20px !important;
+	background-color: #fdeeed !important;
+	letter-spacing: 1px !important;
+	font-size: 0.8rem !important;
+	border: 1px solid #f1867e !important;
+}
+
+.form-input:focus {
+	outline-color:  #fdeeed !important;
+}
+
+.login-button {
+	background-color: #f43630 !important;
+	border: none !important;
+	letter-spacing: 2px !important;
+	border-radius: 20px !important;
+}

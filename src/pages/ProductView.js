@@ -20,7 +20,7 @@ export default function CourseView(){
 	// SET INITIAL VALUE TO NAME, DESC AND PRICE
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
-	const [stock, setStock] = useState(0);
+	const [stocks, setStocks] = useState(0);
 	const [price, setPrice] = useState(0);
 
 	// ACTIVE FETCHING OF PRODUCTS DATA FROM DATABASE
@@ -32,7 +32,7 @@ export default function CourseView(){
 			// PASS FETCHED DATA TO VARIABLES
 			setName(data.details.name);
 			setDescription(data.details.description);
-			setStock(data.details.stocks);
+			setStocks(data.details.stocks);
 			setPrice(data.details.price);
 		});
 
@@ -90,7 +90,7 @@ export default function CourseView(){
 							<Card.Text>PhP {price}</Card.Text>
 							<Card.Subtitle>Available stocks:</Card.Subtitle>
 							<Card.Text>{stocks}</Card.Text>
-							<Button variant="primary"  size="lg" onClick={() => addToCart(productId)}>Enroll</Button>
+							<Button variant="primary"  size="lg" onClick={() => addToCart(productId)}>ADD TO CART</Button>
 						</Card.Body>		
 					</Card>
 				</Col>

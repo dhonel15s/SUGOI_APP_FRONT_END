@@ -39,7 +39,7 @@ export default function ProductCard({productProp}) {
 	                <Card.Text>
 	                    {stocks} Available
 	                </Card.Text>
-	                <Button as={Link} to={`/products/${_id}`} className="banner-button p-2 px-5 shadow">Details</Button>
+	                <Button as={Link} to={`/products/${_id}`} className="banner-button p-2 px-3 shadow">Details</Button>
 	            </Card.Body>
 	        </Card>
         </Col>

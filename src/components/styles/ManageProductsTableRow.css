@@ -1,0 +1,60 @@
+/* IMPORT GOOGLE FONT */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600;700;900&family=Reggae+One&display=swap');
+
+.status-text {
+	font-weight: 900;
+}
+
+td {
+	vertical-align: middle;
+}
+
+.table-action-button {
+	font-size: 0.7rem !important;
+	letter-spacing: 2px !important;
+	border-radius: 5px !important;
+}
+
+.modify-product-title {
+	font-weight: 600 !important;
+}
+
+.modify-button {
+	background-color: #448EF6 !important;
+	border: none !important;
+}
+
+.archive-button {
+	background-color: #FF4A4A !important;
+	border: none !important;
+}
+
+.unarchive-button {
+	background-color: #3F4E4F !important;
+	border: none !important;
+}
+
+.form-input-all-products-table {
+	border-radius: 10px !important;
+	background-color: white !important;
+	letter-spacing: 2px !important;
+	font-size: 0.7rem !important;
+	border: 1px solid #f1867e !important;
+}
+
+.all-products-modify-submit {
+	background-color: #f43630 !important;
+	border: none !important;
+	border-radius: 20px !important;
+	font-size: 0.8rem !important;
+	letter-spacing: 2px !important;
+}
+
+.all-products-modify-cancel {
+	background-color: #f96c62 !important;
+	border: 1px solid #f43630 !important;
+	border-radius: 20px !important;
+	font-size: 0.8rem !important;
+	letter-spacing: 2px !important;
+	color: white !important;
+}

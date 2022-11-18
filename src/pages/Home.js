@@ -9,7 +9,7 @@ export default function Home(){
 	const data = {
 		title: "Sugoi!",
 		subtitle: "Flavors of Japan.",
-		content: "The most authentic Japanese Online Restaurant in Town.",
+		content: "The Original Online Japanese Restaurant in Town.",
 		destination: "/products",
 		label: "Visit our menu."
 	}

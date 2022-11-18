@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { Row, Col, Form, Button, Image } from 'react-bootstrap';
 
 // IMPORT: USER CONTEXT
-import UserContext from '../data/userContext.js';
+import UserContext from '../UserContext.js';
 
 // IMPORT: CSS
 import "./styles/Login.css";
@@ -64,8 +64,11 @@ export default function Login() {
 	        // IF TOKEN IS NOT EMPTY (Valid credentials):
 	        if(data.accessToken !== undefined){
 
-	        	// ADD TOKEN TO LOCAL STORAGE
-	            localStorage.setItem("token", data.accessToken);
+	        	// ADD DATA TO LOCAL STORAGE
+	            sessionStorage.setItem("token", data.accessToken);
+	            sessionStorage.setItem("id", data.userId);
+	            sessionStorage.setItem("isAdmin", data.isAdmin);
+
 
 	            // CALL FUNCTION TO RETRIEVE USER DETAILS FROM TOKEN
 	            retrieveUserDetails(data.accessToken);
@@ -106,69 +109,81 @@ export default function Login() {
 		.then(response => response.json())
 		.then(data => {
 
+
 		    // STORE RETRIEVED USER DATA FROM TOKEN TO USER CONTEXT
 		    setUser({
-		        id: data._id,
-		        isAdmin: data.isAdmin
+		        id: data.details._id,
+		        isAdmin: data.details.isAdmin
 		    });
 		})
 	}
 
 	// LOGIN MAIN DESIGN------------------------------------------------------------------
-	return (
-		(user.id !== null)
-		?
-			<Navigate to="/products"/>
-		:
-		<>	
-			<Row className="login-row d-flex flex-row justify-content-around align-items-center text-center">
-				<Col xs={11} md={5}>
-				<Image src={require('../assets/logo.jpg')} width="40" className="d-block m-auto"/>
-				<p className="form-title">Login</p>
-				<Form  onSubmit={(event) => authenticate(event)} className="form-body border m-auto p-5 shadow">
+	
+	if(user.id === null){
+		return (
+			<>	
+				<Row className="login-row d-flex flex-row justify-content-around align-items-center text-center">
+					<Col xs={11} md={5}>
+						<Image src={require('../assets/logo.jpg')} width="40" className="d-block m-auto mt-2"/>
+						<p className="form-title">Login</p>
+						<Form  onSubmit={(event) => authenticate(event)} className="form-body border m-auto p-5 shadow-sm">
 
-					{/*EMAIL INPUT*/}
-					<Form.Group className="mb-3" controlId="formBasicEmail">
-				  		<Form.Label className="form-label">EMAIL ADDRESS</Form.Label>
-				  		<Form.Control
-				  			className="form-input py-2"
-				  			type="email"
-				  			// VALUE OF EMAIL INPUT FIELD
-				  			value={email}
-				  			// DURING INPUT, PASS THE DATA IN THE FIELD TO "EMAIL"
-				  			onChange={(event) => setEmail(event.target.value)}
-				  			required
-				  		/>
-					</Form.Group>
+							{/*EMAIL INPUT*/}
+							<Form.Group className="mb-3" controlId="formBasicEmail">
+						  		<Form.Label className="form-label">Email Address</Form.Label>
+						  		<Form.Control
+						  			className="form-input py-2"
+						  			type="email"
+						  			// VALUE OF EMAIL INPUT FIELD
+						  			value={email}
+						  			// DURING INPUT, PASS THE DATA IN THE FIELD TO "EMAIL"
+						  			onChange={(event) => setEmail(event.target.value)}
+						  			required
+						  		/>
+							</Form.Group>
 
-					{/*PASSWORD INPUT*/}
-					<Form.Group className="mb-3" controlId="formBasicPassword">
-				        <Form.Label className="form-label">PASSWORD</Form.Label>
-				        <Form.Control
-				        	className="form-input py-2"
-				        	type="password"
-				        	// VALUE OF PASSWORD INPUT FIELD
-				        	value={password}
-				        	// DURING INPUT, PASS THE DATA IN THE FIELD TO "PASSWORD"
-				        	onChange={(event) => setPassword(event.target.value)}
-				        	required
-				        />
-					</Form.Group>
+							{/*PASSWORD INPUT*/}
+							<Form.Group className="mb-3" controlId="formBasicPassword">
+						        <Form.Label className="form-label">Password</Form.Label>
+						        <Form.Control
+						        	className="form-input py-2"
+						        	type="password"
+						        	// VALUE OF PASSWORD INPUT FIELD
+						        	value={password}
+						        	// DURING INPUT, PASS THE DATA IN THE FIELD TO "PASSWORD"
+						        	onChange={(event) => setPassword(event.target.value)}
+						        	required
+						        />
+							</Form.Group>
 
-					{/*CHECKING IF EMAIL AND PASSWORD FIELD IS EMPTY OR NOT*/}
-					{
-						isActive ?
-							// IF INPUT FIELDS ARE COMPLETE
-							<Button className="login-button px-5" variant="primary" type="submit" id="submitBtn">LOGIN</Button>
-						:
-							// IF INPUT FIELDS ARE EMPTY
-							<Button className="login-button px-5" variant="primary" type="submit" id="submitBtn" disabled>LOGIN</Button>
-					}
+							{/*CHECKING IF EMAIL AND PASSWORD FIELD IS EMPTY OR NOT*/}
+							{
+								isActive ?
+									// IF INPUT FIELDS ARE COMPLETE
+									<Button className="login-button px-5" variant="primary" type="submit" id="submitBtn">LOGIN</Button>
+								:
+									// IF INPUT FIELDS ARE EMPTY
+									<Button className="login-button px-5" variant="primary" type="submit" id="submitBtn" disabled>LOGIN</Button>
+							}
 
-					
-				</Form>
-				</Col>
-			</Row>
-		</>
-	)
+							
+						</Form>
+					</Col>
+				</Row>
+			</>
+		)
+	}
+
+	else {
+		if (sessionStorage.getItem("isAdmin") === "true") {
+			return (
+				<Navigate to="/manageproducts"/>
+			)
+		}else{
+			return (
+				<Navigate to="/products"/>
+			)
+		}
+	}
 }
