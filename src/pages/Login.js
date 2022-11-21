@@ -76,21 +76,22 @@ export default function Login() {
 	            Swal.fire({
 	                title: "Login Successful",
 	                icon: "success",
-	                text: "Welcome to Zuitt!"
+	                text: data.message
 	            });
+
+	            setEmail('');
+	            setPassword('');
 	        }
 	        else{
 	        	// IF EMPTY TOKEN (Invalid credentials):
 	            Swal.fire({
-	                title: "Authentication Failed!",
+	                title: "Login Failed!",
 	                icon: "error",
-	                text: "Check your login details and try again."
+	                text: data.message
 	            });
 	        }
 	    });
 
-	    setEmail('');
-	    setPassword('');
 
 	}
 
@@ -161,10 +162,10 @@ export default function Login() {
 							{
 								isActive ?
 									// IF INPUT FIELDS ARE COMPLETE
-									<Button className="login-button px-5" variant="primary" type="submit" id="submitBtn">LOGIN</Button>
+									<Button className="login-button px-4" variant="primary" type="submit" id="submitBtn">LOGIN</Button>
 								:
 									// IF INPUT FIELDS ARE EMPTY
-									<Button className="login-button px-5" variant="primary" type="submit" id="submitBtn" disabled>LOGIN</Button>
+									<Button className="login-button px-4" variant="primary" type="submit" id="submitBtn" disabled>LOGIN</Button>
 							}
 
 							

@@ -65,11 +65,11 @@ export default function Register(){
         .then(response => response.json())
         .then(data =>{
 
-            if(data){
+            if(data.status){
                 Swal.fire({
-                    title: "Sorry. Email already in use.",
+                    title: "Registration Failed.",
                     icon: "error",
-                    text: "Kindly provide another email to complete the registration."
+                    text: data.message
                 })
             }
             else{
@@ -89,11 +89,11 @@ export default function Register(){
                 .then(response => response.json())
                 .then(data => {
 
-                    if(data){
+                    if(data.status){
                         Swal.fire({
                             title: "Registration Successful",
                             icon: "success",
-                            text: "Hi ${firstName} Welcome to Sugoi!"
+                            text: data.message
                         });
                         setFirstName('');
                         setLastName('');
@@ -105,9 +105,9 @@ export default function Register(){
                     else{
 
                         Swal.fire({
-                            title: "Something went wrong",
+                            title: "Registration Failed",
                             icon: "error",
-                            text: "Please try again."
+                            text: data.message
                         });
 
                     }

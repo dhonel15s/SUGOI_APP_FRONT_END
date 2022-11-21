@@ -20,6 +20,6 @@
 .nav-link:hover {
 	border-bottom: 3px solid #fb352a !important;
 }
-.nav-link:active {
+.nav-link.active {
 	border-bottom: 3px solid #fb352a !important;
 }

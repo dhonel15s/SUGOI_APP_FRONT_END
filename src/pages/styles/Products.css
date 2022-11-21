@@ -5,3 +5,16 @@
 	font-size: 2rem !important;
 	font-family: 'Reggae One', cursive !important;
 }
+
+.menu-category-indicator {
+	border-bottom: 3px solid #fb352a !important;
+}
+
+#dropdown-basic-button {
+	border-radius: 15px !important;
+	background-color: #fb352a !important;
+	border: none !important;
+	padding: 6px !important;
+	padding-left: 15px !important;
+	padding-right: 15px !important;
+}

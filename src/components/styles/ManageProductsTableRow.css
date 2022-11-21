@@ -36,7 +36,7 @@ td {
 
 .form-input-all-products-table {
 	border-radius: 10px !important;
-	background-color: white !important;
+	background-color: #FFFAFA !important;
 	letter-spacing: 2px !important;
 	font-size: 0.7rem !important;
 	border: 1px solid #f1867e !important;
@@ -52,9 +52,30 @@ td {
 
 .all-products-modify-cancel {
 	background-color: #f96c62 !important;
-	border: 1px solid #f43630 !important;
 	border-radius: 20px !important;
+	border: none !important;
 	font-size: 0.8rem !important;
 	letter-spacing: 2px !important;
 	color: white !important;
+}
+
+.all-products-modify-reload {
+	background-color: #f43630 !important;
+	border: none !important;
+	border-radius: 20px !important;
+	font-size: 0.8rem !important;
+	letter-spacing: 1px !important;
+}
+
+.form-all-products-table-image-preview {
+	border: 1px solid #f43630 !important;
+}
+
+.modify-form-title {
+	font-family: 'Noto Serif JP', serif;
+	border-bottom: 2px solid #fb352a;
+}
+
+.modify-product-main {
+	border-radius: 20px;
 }

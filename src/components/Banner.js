@@ -18,7 +18,8 @@ export default function Banner({bannerProp}){
 	return(
 		<Row>
 			<Col className="p-5 text-center">
-				<Image src={require('../assets/logo.jpg')} width="100" className=""/>
+				<Image src={require('../assets/highlights/looney-accept-cookies.gif')} width="300"/>
+				{/*<Image src={require('../assets/logo.jpg')} width="100" className=""/>*/}
 				<h1 className="banner-title">{title}</h1>
 				<h5 className="banner-subtitle">{subtitle}</h5>
             	<p>{content}</p>
