@@ -90,6 +90,7 @@ export default function AppNavbar(){
                 <Nav.Link as={ NavLink } to="/products" end>Products</Nav.Link>
                 <Nav.Link as={ NavLink } to="/aboutus" end>About Us</Nav.Link>
                 <Nav.Link as={ NavLink } to="users/cart" end>Cart</Nav.Link>
+                <Nav.Link as={ NavLink } to="users/orders" end>Orders</Nav.Link>
                 <Nav.Link as={ NavLink } to="/logout" end>Logout</Nav.Link>
               </Nav>
             </Navbar.Collapse>

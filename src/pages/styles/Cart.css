@@ -1,0 +1,17 @@
+.accordion-header {
+	background-color: #f43630;
+	border-radius: 5px;
+}
+
+.cart-total-amount {
+	text-align: right !important;
+}
+
+.remove-item-from-cart-button {
+	background-color: #f43630 !important;
+	border: none !important;
+}
+
+.order-total {
+	background-color: #f43630 !important;
+}

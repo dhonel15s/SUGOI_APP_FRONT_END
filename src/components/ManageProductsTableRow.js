@@ -1,6 +1,6 @@
 // IMPORT: DEPENDENCIES
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Swal from "sweetalert2";
 
 // IMPORT: BOOTSTRAP ELEMENTS
@@ -18,6 +18,16 @@ export default function ManageProductsTableRow({productProp}) {
 	const [isProductActive, setIsProductActive] = useState(isActive);
 
 	let token = sessionStorage.getItem("token");
+
+	useEffect(() =>{
+
+		if (isProductActive) {
+			setIsProductActive(true);
+		}else{
+			setIsProductActive(false);
+		}
+
+	}, [isProductActive]);
 
 	function archiveProduct (productId){
 		fetch(`${process.env.REACT_APP_API_URL}/products/archive/${productId}`, {
@@ -85,7 +95,7 @@ export default function ManageProductsTableRow({productProp}) {
 	if(isProductActive === true){
 		return (
 			<tr className="text-dark">
-			  <td>#</td>
+			  
 			  <td>{name}</td>
 			  <td>{category}</td>
 			  <td><Image src={imageLink} height="70" className="border shadow-sm p-0 m-0"></Image></td>
@@ -104,7 +114,7 @@ export default function ManageProductsTableRow({productProp}) {
 	}else{
 		return (
 			<tr className="text-dark">
-			  <td>#</td>
+			  
 			  <td>{name}</td>
 			  <td>{category}</td>
 			  <td><Image src={imageLink} height="70" className="border shadow-sm p-0 m-0"></Image></td>

@@ -1,11 +1,16 @@
 // IMPORT: DEPENDENCIES
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 // IMPORT: BOOTSTRAP ELEMENTS
-import { Container, Table, Row, Col, Button } from 'react-bootstrap';
+import { Container, Table, Row, Col, Button, Accordion, Card, ListGroup, Form } from 'react-bootstrap';
 
 // IMPORT: COMPONENTS
 import CartRow from "../components/CartRow.js";
+
+// IMPORT: CSS
+import "./styles/Cart.css";
 
 // CART FUNCTION MAIN --------------------------------------------------------------
 export default function Cart() {
@@ -13,8 +18,21 @@ export default function Cart() {
 	// DECLARE USE STATES
 	const [cartRows, setCartRows] = useState([]);
 	const [cartItemCount, setCartItemCount] = useState(0);
-	let cartItems = [];
-	
+	const [cartTotalAmount, setCartTotalAmount] = useState(0);
+	const [deliveryAddress, setDeliveryAddress] = useState('');
+	const [deliveryMode, setDeliveryMode] = useState('Standard Delivery');
+	const [deliveryFee, setDeliveryFee] = useState(60);
+	const [paymentMode, setPaymentMode] = useState('E-Wallet');
+	const [orderTotal, setOrderTotal] = useState(deliveryFee);
+
+	const [cartItems, setCartItems] = useState([]);
+
+	// SUBMIT BUTTON DEFAULT VALUE
+	const [isActive, setIsActive] = useState(false);
+
+	// USED FOR NAVIGATING TO OTHER PAGE
+	const navigate = useNavigate();
+
 	// ALL PRODUCTS IN CART --------------------------------------
 	useEffect(() =>{
 
@@ -28,12 +46,11 @@ export default function Cart() {
 		.then(response => response.json())
 		.then(data => {
 
-			setCartItemCount(data.details[0].products.length)
+			setCartItemCount(data.details[0].products.length);
+			setCartTotalAmount(data.details[0].totalAmount);
+			setOrderTotal(data.details[0].totalAmount+deliveryFee);
 
-			for(let x = 0; x < data.details[0].products.length; x++) {
-				cartItems.push(data.details[0].products[x].productName)
-			}
-			console.log(cartItems)
+			setCartItems(data.details[0].products.map(cartItem => cartItem))
 			// DISPLAY EACH PRODUCTS
 			setCartRows(data.details[0].products.map(cartItem =>{
 				return(
@@ -41,69 +58,170 @@ export default function Cart() {
 				);
 			}));
 		})
-	}, []);
+	}, [cartRows]);
+
+	useEffect(() => {
+		if (deliveryMode === "Standard Delivery") {
+			setDeliveryFee(60);
+		}else if(deliveryMode === "Express Delivery"){
+			setDeliveryFee(100);
+		}else {
+			setDeliveryFee(0);
+		}
+	}, [deliveryMode])
+
+
+	useEffect(() => {
+
+	    if(deliveryAddress === '' || cartItemCount === 0 ){
+	        setIsActive(false);
+	    }else{
+	        setIsActive(true);
+	    }
+
+	}, [deliveryAddress]);
 
 	// CART FUNCTIONS -----------------------------------------------------------------
+	const checkoutOrder = () => {
+		fetch(`${ process.env.REACT_APP_API_URL }/users/checkout`, {
+				    method: "POST",
+				    headers: {
+				        "Content-Type": "application/json",
+				        Authorization: `Bearer ${ sessionStorage.getItem('token') }`
+				    },
+				    body: JSON.stringify({
+				    	itemCount: cartItemCount,
+				    	deliveryAddress: deliveryAddress,
+				    	deliveryMode: deliveryMode,
+				    	deliveryFee: deliveryFee,
+				    	paymentMode: paymentMode,
+				    	totalAmount: orderTotal,
+				    	products: cartItems
+				    })
+				})
+				.then(response => response.json())
+				.then(data => {
+				
+					if(data.status){
+						
+						clearCart();
+
+					    Swal.fire({
+					        title: "Order successful!",
+					        icon: "success",
+					        text: "Thank you for your order."
+					    });
+
+					    navigate(`/users/orders`);
+
+					}
+					else{
+					    Swal.fire({
+					        title: "Something went wrong.",
+					        icon: "error",
+					        text: data.message
+					    });
+					}
+
+				})
+	}
+
+	const clearCart = () => {
+		fetch(`${ process.env.REACT_APP_API_URL }/users/carts/clearcart`, {
+				    method: "DELETE",
+				    headers: {
+				        "Content-Type": "application/json",
+				        Authorization: `Bearer ${ sessionStorage.getItem('token') }`
+				    }
+				})
+				.then(response => response.json())
+				.then(data => {})
+	}
 
 
 	// CART MAIN DESIGN------------------------------------------------------------------
 	return (
-		<Container className="mt-5">
-			<Row>
-				<Col xs={8} className="p-2 shadow-sm border rounded">
-					<h3 className="modify-form-title pb-2">Food Cart</h3>
-					<Table bordered hover className="shadow-sm p-0 m-0 text-white">
-						<thead className="product-table-header">
-					    	<tr>
-					    	  <th>Product Details</th>
-					    	  <th>Quantity</th>
-					    	  <th>Price</th>
-					    	  <th>Subtotal</th>
-					    	</tr>
-					    </thead>
-					      
-					    <tbody>
-					    	{cartRows}
-					    </tbody>
-					</Table>
-				</Col>
+		<Container className="mt-5 d-md-flex">
+			<Container className="mt-2">
+				<h6 className="modify-form-title pb-2">Food Cart</h6>
+				<Accordion>
+					<Container className="border d-flex p-2 text-white accordion-header">
+							<Col className="ps-2">
+								Name
+							</Col>
+							<Col>
+								Quantity
+							</Col>
+							<Col>
+								Price
+							</Col>
+							<Col>
+								Subtotal
+							</Col>
+					</Container>	
+				     {cartRows}
+				    <Container className="border d-flex p-2 text-white accordion-header">
+				    		<Col className="ps-2 cart-total-amount">
+				    			Total: Php {cartTotalAmount}
+				    		</Col>
+				    </Container>
+				</Accordion>
+			</Container>
 
-				<Col xs={3} offset={1}  className="p-2 shadow-sm border rounded ms-4">
-					<h3 className="modify-form-title pb-2">Order Summary</h3>
-					<Row>
-						<Col>
-							<p className="d-inline">Items in Cart: </p>
-							<p className="d-inline"><strong>{cartItemCount}</strong></p>
-						</Col>
-					</Row>
-					
-					<Row>
-						<Col>
-							<p className="d-inline">Delivery Address: </p>
-							<p className="d-inline"><strong>{cartItemCount}</strong></p>
-						</Col>
-					</Row>
-					<Row>
-						<Col>
-							<p className="d-inline">Shipping Option: </p>
-							<p className="d-inline"><strong>{cartItemCount}</strong></p>
-						</Col>
-					</Row>
-					<Row>
-						<Col>
-							<p className="d-inline">Payment Option: </p>
-							<p className="d-inline"><strong>{cartItemCount}</strong></p>
-						</Col>
-					</Row>
-					<Row>
-						<Col>
-							<p className="d-inline">Total Payment: </p>
-							<p className="d-inline"><strong>{cartItemCount}</strong></p>
-						</Col>
-					</Row>
-					<Button className="banner-button p-2 px-5 mt-5 shadow">Checkout</Button>
-				</Col>
-			</Row>
+			<Container className="mt-2">
+				<h6 className="modify-form-title pb-2">Order Summary</h6>
+					<Card className="my-3">
+				        <Card.Body className="p-0 m-0">
+				            <ListGroup className="list-group-flush">
+				              <ListGroup.Item className="d-flex">
+				                    <p className="m-0 product-card-subtitle">Item count:</p>
+				                    <p className="ms-auto m-0 product-card-text">{cartItemCount}</p>
+				              </ListGroup.Item>
+				              <ListGroup.Item className="d-flex">
+				                    <p className="m-0 product-card-subtitle">Items total:</p>
+				                    <p className="ms-auto m-0 product-card-text">Php {cartTotalAmount}</p>
+				              </ListGroup.Item>
+				              <ListGroup.Item className="d-flex">
+				              		<p className="m-0 product-card-subtitle">Delivery address:</p>
+				              		<Form.Control className="rounded-pill product-card-text" as="textarea"  rows={1} onChange={(event) => setDeliveryAddress(event.target.value)} required/>
+				              </ListGroup.Item>
+				              <ListGroup.Item className="d-flex">
+				              		<p className="m-0 product-card-subtitle">Delivery mode:</p>
+				              		<Form.Select className="rounded-pill product-card-text" value={deliveryMode} onChange={(event)=> setDeliveryMode(event.target.value)}>
+				              		      <option value="Standard Delivery">Standard Delivery</option>
+				              		      <option value="Express Delivery">Express Delivery</option>
+				              		      <option value="For Pickup">For Pickup</option>
+				              		 </Form.Select>
+				              </ListGroup.Item>
+				              <ListGroup.Item className="d-flex">
+				                    <p className="m-0 product-card-subtitle">Delivery fee:</p>
+				                    <p className="ms-auto m-0 product-card-text">Php {deliveryFee}</p>
+				              </ListGroup.Item>
+				              <ListGroup.Item className="d-flex">
+				              		<p className="m-0 product-card-subtitle">Payment mode:</p>
+				              		<Form.Select className="rounded-pill product-card-text" value={paymentMode} onChange={(event)=> setPaymentMode(event.target.value)}>
+				              		      <option value="E-Wallet">E-Wallet</option>
+				              		      <option value="Credit Card">Credit Card</option>
+				              		      <option value="Cash on Delivery">Cash on Delivery</option>
+				              		 </Form.Select>
+				              </ListGroup.Item>
+				              <ListGroup.Item className="d-flex order-total">
+				                    <p className="m-0 product-card-subtitle text-white">Order Total:</p>
+				                    <p className="ms-auto m-0 text-white">Php {orderTotal}</p>
+				              </ListGroup.Item>
+				            </ListGroup>
+				        </Card.Body>
+
+				        <Card.Footer className="d-flex justify-content-end">
+				        {
+				        	isActive ?
+				        		<Button className="all-products-modify-submit shadow-sm p-2 px-3 cart-total-amount" onClick={(event)=>checkoutOrder()}>Checkout</Button>
+				        	:
+				        		<Button className="all-products-modify-submit shadow-sm p-2 px-3 cart-total-amount" disabled>Checkout</Button>
+				        }
+				        </Card.Footer>
+				    </Card>
+			</Container>
 		</Container>
 	)
 }

@@ -126,7 +126,13 @@ export default function ManageProductsModify(){
 			        			<Col>
 			        			<Form.Group className="mb-3">
 			        			  <Form.Label>Category</Form.Label>
-			        			  <Form.Control className="form-input-all-products-table py-2" type="text" value={category} onChange={(event)=> setCategory(event.target.value)}/>
+			        			  <Form.Select className="form-input-all-products-table py-2" value={category} onChange={(event)=> setCategory(event.target.value)}>
+			        			        <option value="Rice Meals">Rice Meals</option>
+			        			        <option value="Noodles">Noodles</option>
+			        			        <option value="Sides">Sides</option>
+			        			        <option value="Drinks">Drinks</option>
+			        			        <option value="Desserts">Desserts</option>
+			        			   </Form.Select>
 			        			</Form.Group>
 			        			</Col>
 			        		</Row>
@@ -162,14 +168,14 @@ export default function ManageProductsModify(){
 			        			<Col>
 			        			<Form.Group className="mb-3">
 			        			  <Form.Label>Price</Form.Label>
-			        			  <Form.Control className="form-input-all-products-table py-2" type="number" value={price} onChange={(event)=> setPrice(event.target.value)}/>
+			        			  <Form.Control className="form-input-all-products-table py-2" type="number"  value={price} onChange={(event)=> setPrice(event.target.value)}/>
 			        			</Form.Group>
 			        			</Col>
 
 			        			<Col>
 			        			<Form.Group className="mb-3">
 			        			  <Form.Label>Stocks</Form.Label>
-			        			  <Form.Control className="form-input-all-products-table py-2" type="number" value={stocks} onChange={(event)=> setStocks(event.target.value)}/>
+			        			  <Form.Control className="form-input-all-products-table py-2" type="number" min="1" value={stocks} onChange={(event)=> setStocks(event.target.value)}/>
 			        			</Form.Group>
 			        			</Col>
 			        		</Row>

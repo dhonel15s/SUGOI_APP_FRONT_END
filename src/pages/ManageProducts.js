@@ -21,11 +21,11 @@ export default function ManageProducts() {
 	const [archivedProductsRows, setArchivedProductsRows] = useState([]);
 
 	const [name, setName] = useState('');
-	const [category, setCategory] = useState('');
+	const [category, setCategory] = useState('Rice Meals');
 	const [imageLink, setImageLink] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSrGoGc5jeRMVBq5AlMond7BFu2zbvPKg2mtpNh34sIEDdh7nZKfUN__Y3s7fji_DttLs&usqp=CAU');
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState(0);
-	const [stocks, setStocks] = useState(0);
+	const [stocks, setStocks] = useState(1);
 
 	let user = {
 		token: sessionStorage.getItem("token"),
@@ -44,12 +44,15 @@ export default function ManageProducts() {
 		.then(data => {
 			// DISPLAY EACH PRODUCTS
 			setAllProductsRows(data.map(product =>{
-				return(
-					<ManageProductsTableRow key={product._id} productProp={product}/>
-				);
+				if (product.isActive) {
+					return(
+						<ManageProductsTableRow key={product._id} productProp={product}/>
+					);
+				}
+				
 			}));
 		})
-	}, []);
+	}, [archivedProductsRows]);
 
 	// ARCHIVED PRODUCTS --------------------------------------
 	useEffect(() =>{
@@ -67,7 +70,7 @@ export default function ManageProducts() {
 				}
 			}));
 		})
-	}, []);
+	}, [allProductsRows]);
 
 
 	function authenticate(event) {
@@ -141,11 +144,11 @@ export default function ManageProducts() {
 		<Tabs defaultActiveKey="all" className="mt-4 admin-tabs">
 
 			{/*ALL ACTIVE PRODUCTS*/}
-			<Tab eventKey="all" title="All Products">
+			<Tab eventKey="all" title="Active Products">
 			  <Table striped bordered className="border shadow-sm text-white mt-2">
 			        <thead className="product-table-header">
 			          <tr>
-			            <td className="product-table-header-item">No.</td>
+			            
 			            <td className="product-table-header-item">Product Name</td>
 			            <td className="product-table-header-item">Category</td>
 			            <td className="product-table-header-item">Product Image</td>
@@ -167,7 +170,7 @@ export default function ManageProducts() {
 				<Table striped bordered className="border shadow-sm text-white mt-2">
 					<thead className="product-table-header">
 					  <tr>
-					    <td className="product-table-header-item">No.</td>
+					    
 					    <td className="product-table-header-item">Product Name</td>
 					    <td className="product-table-header-item">Category</td>
 					    <td className="product-table-header-item">Product Image</td>
@@ -201,7 +204,13 @@ export default function ManageProducts() {
 					        			<Col>
 					        			<Form.Group className="mb-3">
 					        			  <Form.Label>Category</Form.Label>
-					        			  <Form.Control className="form-input-all-products-table py-2" type="text" value={category} onChange={(event)=> setCategory(event.target.value)}/>
+					        			  <Form.Select className="form-input-all-products-table py-2" value={category} onChange={(event)=> setCategory(event.target.value)}>
+					        			        <option value="Rice Meals">Rice Meals</option>
+					        			        <option value="Noodles">Noodles</option>
+					        			        <option value="Sides">Sides</option>
+					        			        <option value="Drinks">Drinks</option>
+					        			        <option value="Desserts">Desserts</option>
+					        			   </Form.Select>
 					        			</Form.Group>
 					        			</Col>
 					        		</Row>
@@ -239,7 +248,7 @@ export default function ManageProducts() {
 
 						        			  <Form.Control className="form-input-all-products-table py-2" type="number" value={price} onChange={(event)=> setPrice(event.target.value)}/>
 						        			  <Form.Label>Stocks</Form.Label>
-						        			  <Form.Control className="form-input-all-products-table py-2" type="number" value={stocks} onChange={(event)=> setStocks(event.target.value)}/>
+						        			  <Form.Control className="form-input-all-products-table py-2" type="number" min="1" value={stocks} onChange={(event)=> setStocks(event.target.value)}/>
 						        			</Form.Group>
 						        		</Col>
 					        		</Row>

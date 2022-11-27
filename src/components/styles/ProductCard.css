@@ -23,7 +23,7 @@
 }
 
 .product-card-title {
-	font-size: 1.5rem !important;
+	font-size: 1rem !important;
 	font-weight: 900 !important;
 	border-bottom: 2px solid #fb352a !important;
 }
@@ -39,4 +39,8 @@
 	font-size: 0.8rem !important;
 	font-weight: 500 !important;
 	letter-spacing: 1px !important;
+}
+
+.product-card-image {
+	border-radius: 0 !important;
 }

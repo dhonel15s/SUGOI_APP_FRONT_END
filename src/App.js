@@ -21,6 +21,7 @@ import Cart from './pages/Cart.js';
 import Error from './pages/Error.js';
 import ManageProducts from './pages/ManageProducts.js';
 import ManageProductsModify from './pages/ManageProductsModify.js';
+import Orders from './pages/Orders.js';
 
 // IMPORT: COMPONENTS
 import AppNavbar from './components/AppNavbar.js';
@@ -139,6 +140,7 @@ function App() {
               <Route exact path="/" element={<Home/>}/>
               <Route exact path="/products" element={<Products/>}/>
               <Route exact path="/users/cart" element={<Cart/>}/>
+              <Route exact path="/users/orders" element={<Orders/>}/>
               <Route exact path="/login" element={<Login/>}/>
               <Route exact path="/logout" element={<Logout/>}/>
               <Route exact path="*" element={<Error/>}/>

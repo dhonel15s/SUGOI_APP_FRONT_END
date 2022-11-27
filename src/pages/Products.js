@@ -28,15 +28,34 @@ export default function Products() {
 			// DISPLAY EACH PRODUCTS
 			setProducts(data.productList.map(product =>{
 
-			if(product.stocks > 0){
-				return(
-						<ProductCard key={product._id} productProp={product}/>
-					);
-			}			
+			if (selectedCategory === 'All Products') {
+				if(product.stocks > 0){
+					return(
+							<ProductCard key={product._id} productProp={product}/>
+						);
+				}
+					
+				
+			}else {
+				console.log(selectedCategory)
+				console.log(product.stocks > 0)
+				console.log(product.category === selectedCategory)
+				console.log(product.category)
+				console.log(selectedCategory)
+				if(product.stocks > 0){
+					if(product.category === selectedCategory){
+						return(
+							<ProductCard key={product._id} productProp={product}/>
+						);
+					}
+					
+				}	
+			}
+					
 					
 			}));
 		})
-	}, []);
+	}, [selectedCategory]);
 
 	// PRODUCTS MAIN DESIGN------------------------------------------------------------------
 	return(
@@ -56,7 +75,7 @@ export default function Products() {
 				<p className="menu-category-indicator my-auto ms-2 pb-1">{selectedCategory}</p>
 			</Col>
 			</Row>
-			<Row>{products}</Row>
+			<Row className="mb-5">{products}</Row>
 		</>
 	)
 }

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 // IMPORT: BOOTSTRAP ELEMENTS
-import { Card, Button, Row, Col, Image } from 'react-bootstrap';
+import { Card, Row, Col, Button, Image, ListGroup } from 'react-bootstrap';
 
 // IMPORT: CSS
 import './styles/ProductCard.css';
@@ -16,11 +16,6 @@ export default function ProductCard({productProp}) {
 
 	const { _id, name,  category, imageLink, description, price, stocks  } = productProp;
 
-    const [productName, setProductName] = useState(name);
-    const [productCategory, setProductCategory] = useState(category);
-    const [productImageLink, setProductImageLink] = useState(imageLink);
-    const [productDescription, setProductDescription] = useState(description);
-    const [productPrice, setProductPrice] = useState(price);
     const [productStocks, setProductStocks] = useState(stocks);
     
 
@@ -70,29 +65,39 @@ export default function ProductCard({productProp}) {
 
     // PRODUCT CARD MAIN DESIGN------------------------------------------------------------------
     return (
-    	<Col xs={12} md={4} className="p-4">
-    		<Row className="border rounded shadow-sm p-2 main-products-page-cards">
-                <Row>
-        			<Col xs={5} className="d-flex align-items-center">
-        				<Image src={productImageLink} fluid/>
-        			</Col>
-       				<Col xs={7}>
-       					<p className="m-0 product-card-title"><strong>{productName}</strong></p>
-       					<p className="m-0 product-card-subtitle">Category</p>
-                        <p className="m-0 product-card-text">{productCategory}</p>
-       					<p className="m-0 product-card-subtitle">Description</p>
-                        <p className="m-0 product-card-text">{productDescription}</p>
-       					<p className="m-0 product-card-subtitle">Price</p>
-                        <p className="m-0 product-card-text">{productPrice}</p>
-       					<p className="m-0 product-card-subtitle">Stocks</p>
-                        <p className="m-0 product-card-text">{productStocks}</p>
-                        <Button onClick={(event)=> addToCart(_id)} className="product-card-buttons shadow-sm me-2">Add to cart</Button>
-                        <Button as={Link} to={`/products/${_id}`} className="product-card-buttons product-card-buttons-order-now shadow-sm">Order Now</Button>
-       				</Col>
-                </Row>
+        <Col xs={12} md={4} className="p-3">
+        	<Card className="my-3 main-products-page-cards">
+                <Card.Header className="product-card-title">
+                    {name}
+                </Card.Header>
 
-                
-    		</Row>
+                <Card.Body className="p-0 m-0">
+                    <Card.Img src={imageLink} height="250" className="product-card-image"/>
+                    <ListGroup className="list-group-flush">
+                      <ListGroup.Item>
+                            <p className="m-0 product-card-subtitle">Category</p>
+                            <p className="m-0 product-card-text">{category}</p>
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                            <p className="m-0 product-card-subtitle">Description</p>
+                            <p className="m-0 product-card-text">{description}</p>
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                            <p className="m-0 product-card-subtitle">Price</p>
+                            <p className="m-0 product-card-text">{price}</p>
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                            <p className="m-0 product-card-subtitle">Stocks</p>
+                        <p className="m-0 product-card-text">{productStocks} available</p>
+                      </ListGroup.Item>
+                    </ListGroup>
+                </Card.Body>
+
+                <Card.Footer>
+                    <Button onClick={(event)=> addToCart(_id)} className="product-card-buttons shadow-sm me-2">Add to cart</Button>
+                    <Button as={Link} to={`/products/${_id}`} className="product-card-buttons product-card-buttons-order-now shadow-sm">Order Now</Button>
+                </Card.Footer>
+            </Card>
         </Col>
     )
 }
